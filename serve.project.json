@@ -1,0 +1,19 @@
+{
+	"name": "Flair tests",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"Packages": {
+				"$className": "Folder",
+				"Flair": {
+					"$path": "lib"
+				}
+			}
+		},
+		"StarterPlayer": {
+			"StarterPlayerScripts": {
+				"$path": "tests/client"
+			}
+		}
+	}
+}
