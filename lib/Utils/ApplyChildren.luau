@@ -1,18 +1,28 @@
+-- FOLDERS >
+local Root = script.Parent.Parent
+
 -- DEPENDENCIES >
-local Types = require(script.Parent.Parent.Types)
-local Debugger = require(script.Parent.Debugger)
+local IsFlairClass = require(Root.Utils.IsFlairClass)
+local Debugger = require(Root.Utils.Debugger)
+local View = require(Root.Functions.View)
+local Types = require(Root.Types)
 
 -- FUNCTIONS >
 local function ApplyChildren(instance: Instance, childrenTable: Types.ChildrenTable)
-	if type(childrenTable) == "table" then
-		for name, value in childrenTable do
-			value.Name = name
-			value.Parent = instance
+	local Returned = View(childrenTable)
+
+	if typeof(Returned) == "Instance" then
+		Returned.Parent = instance
+	elseif type(Returned) == "table" then
+		if IsFlairClass(Returned) == true then
+			(Returned :: Types.FlairObject):Release().Parent = instance
+		else
+			for _, object in Returned do
+				(View(object) :: Instance).Parent = instance
+			end
 		end
-	elseif typeof(childrenTable) == "Instance" then
-		childrenTable.Parent = instance
 	else
-		Debugger.Warn("TypeMismatch", "{ Instance } | Instance", type(childrenTable))
+		Debugger.Warn("TypeMismatch", "Instance | FlairObject | { Instance | FlairObject }", typeof(childrenTable))
 	end
 end
 

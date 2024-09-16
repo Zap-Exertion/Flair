@@ -1,5 +1,5 @@
 {
-	"name": "Flair tests",
+	"name": "Flair.Dev",
 	"tree": {
 		"$className": "DataModel",
 		"ReplicatedStorage": {
@@ -9,6 +9,9 @@
 					"$path": "lib"
 				}
 			}
+		},
+		"ServerScriptService": {
+			"$path": "tests/server"
 		},
 		"StarterPlayer": {
 			"StarterPlayerScripts": {

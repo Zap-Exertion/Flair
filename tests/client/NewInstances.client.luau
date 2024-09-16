@@ -10,11 +10,12 @@ local New = Flair.New
 local Player = Players.LocalPlayer
 
 -- UI >
-New("ScreenGui", {
-	Name = "hi wo",
-	Parent = Player:WaitForChild("PlayerGui"),
-	IgnoreGuiInset = "fdssdf",
-	dsa = "dsa",
-}, {
-	frame = New("Frame", {}),
-})
+New "ScreenGui"
+	:Props {
+		IgnoreGuiInset = true,
+		Parent = Player:WaitForChild("PlayerGui"),
+	}
+	:Children {
+		Frame = New "Frame":Props { Size = UDim2.fromScale(0.5, 0.5) },
+	}
+	:Tag { "GUI", "VisibleAtIntermission" }
