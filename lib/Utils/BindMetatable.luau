@@ -1,14 +1,15 @@
 -- RETURNING >
-return function(functions: {})
-	return setmetatable({}, {
-		__index = function(_, functionName)
-			local FoundMethod = functions[functionName] or nil
+return function(properties: {}, functions: {})
+	return setmetatable(properties, {
+		__index = function(tab, key)
+			local method = functions[key]
 
-			return function(...)
-				if FoundMethod then
-					FoundMethod(...)
-				end
+			if method then
+				-- If it's a method, return it
+				return method
 			end
+
+			return rawget(tab, key) -- It might be a property then
 		end,
 	})
 end

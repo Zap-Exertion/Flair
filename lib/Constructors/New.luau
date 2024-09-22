@@ -3,9 +3,9 @@ local Root = script.Parent.Parent
 local Utils = Root.Utils
 
 -- DEPENDENCIES >
-local BindMetatable = require(Utils.BindMetatable)
 local ApplyProperty = require(Utils.ApplyProperty)
 local ApplyChildren = require(Utils.ApplyChildren)
+local BindMetatable = require(Utils.BindMetatable)
 local Debugger = require(Utils.Debugger)
 local Types = require(Root.Types)
 
@@ -35,20 +35,6 @@ function Class.Children(self: Types.FlairObject, childrenTable: Types.ChildrenTa
 	return self
 end
 
-function Class.Tag(self: Types.FlairObject, tagName: string | { string }): Types.FlairObject
-	local Type = type(tagName)
-
-	if Type == "string" then
-		self.Value:AddTag(tagName :: string)
-	elseif Type == "table" then
-		for _, tag in tagName :: { string } do
-			self.Value:AddTag(tag)
-		end
-	end
-
-	return self
-end
-
 function Class.Release(self: Types.FlairObject): Instance
 	local ReleasedInstance = self.Value
 
@@ -68,27 +54,18 @@ function Class.Destroy(self: Types.FlairObject): ()
 end
 
 -- RETURNING >
---[[
+--[=[
 ## `New`
 Constructs a new instance.
 
----
+@param className: `string`
+@return `FlairObject`
 
-### Parameters
-- **className:** `string`
-
----
-
-### Returns
-- `Flair.Object`
-
----
-
-### Usage
+#### Usage
 ```luau
 local MenuGui = New("ScreenGui") -> FlairObject
 ```
-]]
+]=]
 return function(className: string): Types.FlairObject
 	local Success, Result = pcall(Instance.new, className)
 
@@ -96,11 +73,9 @@ return function(className: string): Types.FlairObject
 		Debugger.Error("InvalidInstance", className)
 	end
 
-	local self: Types.FlairObject = BindMetatable(Class) :: any
-
-	self.Flair = true
-	self.ClassName = "New"
-	self.Value = Result
-
-	return self
+	return BindMetatable({
+		Flair = true,
+		ClassName = "New",
+		Value = Result,
+	}, Class) :: any
 end

@@ -10,6 +10,7 @@ local New = Flair.New
 local Player = Players.LocalPlayer
 
 -- UI >
+--[[
 New "ScreenGui"
 	:Props {
 		IgnoreGuiInset = true,
@@ -19,3 +20,4 @@ New "ScreenGui"
 		Frame = New "Frame":Props { Size = UDim2.fromScale(0.5, 0.5) },
 	}
 	:Tag { "GUI", "VisibleAtIntermission" }
+]]
